@@ -2,7 +2,7 @@
 Code for the ICML 2019 paper "A Kernel Perspective for Regularizing Deep Neural Networks"
 by A. Bietti, G. Mialon, D. Chen and J. Mairal.
 
-This script runs training on subsets of cifar with our various regularization strategies.
+This script runs training on (subsets of) cifar or mnist with our various regularization strategies.
 The option `--experiment <exp>` is for choosing different architectures (1000 vs 5000 examples,
 VGG or ResNet, with/without data augmentation, see experiment.py for a list). By default,
 1000 examples with VGG and data augmentation are used.
@@ -105,8 +105,10 @@ if __name__ == '__main__':
                         help='regularization parameter for stability penalty')
     parser.add_argument('--lmbdatan', default=0.1, type=float,
                         help='regularization parameter for tangent gradient penalty')
-    parser.add_argument('--tau', default=0.5, type=float)
-    parser.add_argument('--kappa', default=2., type=float)
+    parser.add_argument('--tau', default=0.5, type=float,
+                        help='radius for spectral norm constraint')
+    parser.add_argument('--kappa', default=2., type=float,
+                        help='decay parameter for spectral norm constraints')
     parser.add_argument('--nb_it', default=2, type=int,
                         help='number of iteration for the power iteration method')
     parser.add_argument('--vat_xi', default=1e-6, type=float,
