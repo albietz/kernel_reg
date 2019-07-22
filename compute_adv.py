@@ -26,6 +26,7 @@ if __name__ == '__main__':
     parser.add_argument('--save', action='store_true', help='save norm file')
     parser.add_argument('--steps', default=40, type=int)
     parser.add_argument('--linf_step_size', default=0.01, type=float)
+    parser.add_argument('--l2_step_size', default=None, type=float)
     args = parser.parse_args()
 
     net, loaders = experiment.load_experiment(args)
@@ -63,7 +64,7 @@ if __name__ == '__main__':
 
     print('l2 - ', end='')
     for eps in epsilons:
-        acc_adv = eval(attack=reg.PGDL2(net, loss_fn, epsilon=eps, steps=args.steps))
+        acc_adv = eval(attack=reg.PGDL2(net, loss_fn, epsilon=eps, steps=args.steps, step_size=args.l2_step_size))
         accs_dict_l2[eps] = acc_adv
         print('{}: {}'.format(eps, acc_adv), end=', ')
     print()
