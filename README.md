@@ -31,15 +31,17 @@ For example, for some weight decay on 5000 examples with ResNet-18:
 
 ### Example for robustness
 
-PGD-l2 with epsilon = 1.0 + spectral norm constraint with radius tau = 0.8 on Cifar10 with data augmentation (this gives the best robust accuracy in Figure 1(right) of the paper). The name `robust_vgg` is used to save the model for evaluating robustness later
+PGD-l2 with epsilon = 2.0 + spectral norm constraint with radius tau = 0.8 on Cifar10 with data augmentation. The name `robust_vgg` is used to save the model for evaluating robustness later
 
-```> python main.py --experiment cifar10_vgg --name robust_vgg --reg_pgdl2 --epsilon 1.0 --reg_project_sn --tau 0.8 --kappa 50```
+```> python main.py --experiment cifar10_vgg --name robust_vgg --reg_pgdl2 --epsilon 2.0 --reg_project_sn --tau 0.8 --kappa 50```
 
 Now, evaluate the robustness of the model:
 
 ```> python compute_adv.py --experiment cifar10_vgg --name robust_vgg```
 
-For an l2 adversary with epsilon_test = 1.0, this model should give about 50% robust test accuracy for the default PGD attack.
-We later found that this default l2 attack, which is used in the paper, is a bit weak, and when using a stronger attack (adding `--l2_step_size 0.5 --steps 500` in this last command), the robust accuracy of this same model drops to **41.68%** (note that `--l2_step_size 0.5 --steps 40` gave about the same).
-The best reported accuracy we found is 39.9% in [Rony et al. (2019)](http://openaccess.thecvf.com/content_CVPR_2019/papers/Rony_Decoupling_Direction_and_Norm_for_Efficient_Gradient-Based_L2_Adversarial_Attacks_CVPR_2019_paper.pdf), indicating that perhaps our model improves on the state-of-the art, though they are using a different attack, which may be stronger.
-If you can further break our model, please drop me an email (here is [the .pth file](http://pascal.inrialpes.fr/data2/abietti/comb_pgdl2_project_sn50_1.0_0.8.pth) for the VGG model).
+For an l2 adversary with epsilon_test = 1.0, this model should give about **47.04%** robust test accuracy for the default PGD attack, which is stronger than the one used in the paper (100 steps of PGD with step-size fixed to 0.5).
+The figure below shows standard vs robust accuracy trade-off curves for this stronger attack (corresponding to Figures 1 and 3 in the paper).
+The best reported accuracy we found is 39.9% in [Rony et al. (2019)](http://openaccess.thecvf.com/content_CVPR_2019/papers/Rony_Decoupling_Direction_and_Norm_for_Efficient_Gradient-Based_L2_Adversarial_Attacks_CVPR_2019_paper.pdf), indicating that perhaps our model improves on the state-of-the art, though they are using a different attack, which may be stronger, and a different architecture.
+If you can further break our model, please drop me an email (here is [the .pth file](http://pascal.inrialpes.fr/data2/abietti/comb_pgdl2_project_sn50_2.0_0.8.pth) for the VGG model).
+
+![trade-off](test_vs_adv.png)
