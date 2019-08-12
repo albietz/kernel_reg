@@ -289,7 +289,10 @@ if __name__ == '__main__':
         # evaluate
         if epoch % args.eval_delta == 0:
             train_loss, train_acc = eval(data='train')
-            _, val_acc = eval(data='val')
+            if valloader is not None:
+                _, val_acc = eval(data='val')
+            else:
+                val_acc = 0.
             _, test_acc = eval(data='test')
             logging.info('epoch: {} ({:.2f}+{:.2f}s), train loss: {:.4f}, train acc: {:.4f}, val acc: {:.4f}, test acc: {:.4f}'.format(
                 epoch, elapsed, time.time() - t, train_loss, train_acc, val_acc, test_acc))

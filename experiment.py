@@ -8,8 +8,6 @@ from torch.utils import data
 
 import model
 
-CIFAR_ROOT = 'data'
-
 
 def set_arg(args, k, v):
     if 'k' not in args or getattr(args, k) is None:
