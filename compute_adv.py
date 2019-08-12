@@ -15,7 +15,7 @@ MODEL_ROOT = 'models'
 RESULT_ROOT = 'resadv'
 
 # values of epsilon for l2/linf to evaluate
-epsilons = [0.1, 0.3, 1., 3.0]
+epsilons = [0.1, 0.5, 1.0, 1.5]
 epsilons_inf = [1, 2, 5, 8] # / 255 !
 
 
@@ -24,9 +24,9 @@ if __name__ == '__main__':
     parser.add_argument('--experiment', default='cifar10_vgg')
     parser.add_argument('--name', default='tmp', help='name of experiment')
     parser.add_argument('--save', action='store_true', help='save norm file')
-    parser.add_argument('--steps', default=40, type=int)
+    parser.add_argument('--steps', default=100, type=int)
     parser.add_argument('--linf_step_size', default=0.01, type=float)
-    parser.add_argument('--l2_step_size', default=None, type=float)
+    parser.add_argument('--l2_step_size', default=0.5, type=float)
     args = parser.parse_args()
 
     net, loaders = experiment.load_experiment(args)
